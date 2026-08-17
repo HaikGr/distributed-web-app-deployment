@@ -53,20 +53,6 @@ spec:
             - name: POSTGRES_PORT
               value: "{{ .Values.postgres.port }}"
 
-            - name: POSTGRES_DB
-              value: "{{ .Values.postgres.database }}"
-
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: POSTGRES_USER
-
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: POSTGRES_PASSWORD
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

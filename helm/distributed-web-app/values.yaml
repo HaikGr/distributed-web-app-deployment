@@ -36,4 +36,3 @@ aws:
 postgres:
   host: postgres
   port: 5432
-  database: distributed
