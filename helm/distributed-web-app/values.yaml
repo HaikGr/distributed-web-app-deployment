@@ -32,3 +32,8 @@ imagePullSecrets:
 
 aws:
   region: us-east-1
+
+postgres:
+  host: postgres
+  port: 5432
+  database: distributed

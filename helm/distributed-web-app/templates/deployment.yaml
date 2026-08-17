@@ -34,7 +34,7 @@ spec:
           env:
             - name: AWS_DEFAULT_REGION
               value: "{{ .Values.aws.region }}"
-     
+
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -52,6 +52,29 @@ spec:
 
             - name: WORKERS_TABLE
               value: "distributed-workers"
+
+            # PostgreSQL
+
+            - name: POSTGRES_HOST
+              value: "{{ .Values.postgres.host }}"
+
+            - name: POSTGRES_PORT
+              value: "{{ .Values.postgres.port }}"
+
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgres.database }}"
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
