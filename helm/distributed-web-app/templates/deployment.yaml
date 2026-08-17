@@ -31,21 +31,13 @@ spec:
           ports:
             - containerPort: 8000
 
+          envFrom:
+            - secretRef:
+                name: distributed-web-app-secrets
+
           env:
             - name: AWS_DEFAULT_REGION
               value: "{{ .Values.aws.region }}"
-
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: AWS_ACCESS_KEY_ID
-
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: AWS_SECRET_ACCESS_KEY
 
             - name: DYNAMODB_TABLE
               value: "distributed-processing"
