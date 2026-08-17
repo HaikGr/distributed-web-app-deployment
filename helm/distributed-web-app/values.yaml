@@ -1,0 +1,34 @@
+replicaCount: 2
+
+image:
+  repository: host.minikube.internal:8082/distributed-web-app
+  tag: "35"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+
+imagePullSecrets:
+  - name: nexus-registry
+
+
+aws:
+  region: us-east-1

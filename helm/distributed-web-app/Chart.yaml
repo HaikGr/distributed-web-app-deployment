@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: distributed-web-app
+
+description: Distributed Processing Web Application
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0"
