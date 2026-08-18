@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: host.minikube.internal:8082/distributed-web-app
-  tag: "43"
+  tag: "44"
   pullPolicy: IfNotPresent
 
 service:
