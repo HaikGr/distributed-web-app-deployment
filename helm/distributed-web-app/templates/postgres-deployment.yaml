@@ -23,6 +23,10 @@ spec:
 
           image: postgres:17-alpine
 
+          args:
+            - "-c"
+            - "wal_level=logical"
+
           ports:
             - containerPort: 5432
 
