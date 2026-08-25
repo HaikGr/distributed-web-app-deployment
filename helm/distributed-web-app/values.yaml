@@ -9,7 +9,7 @@ container:
 
 image:
   repository: host.minikube.internal:8082/distributed-web-app
-  tag: "46"
+  tag: "47"
   pullPolicy: IfNotPresent
 
 service:
