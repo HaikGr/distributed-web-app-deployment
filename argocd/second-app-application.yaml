@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/HaikGr/distributed-web-app-deployment.git
-    targetRevision: HEAD
+    targetRevision: main
     path: helm/distributed-web-app
     helm:
       valueFiles:
