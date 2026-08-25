@@ -50,6 +50,9 @@ env:
   - name: WORKERS_TABLE
     value: "distributed-workers"
 
+  - name: POSTGRES_DB
+    value: distributed
+
   - name: POSTGRES_HOST
     value: "postgres"
 
