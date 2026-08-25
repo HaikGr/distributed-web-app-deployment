@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: {{ .Release.Name }}
-
 spec:
   replicas: {{ .Values.replicaCount }}
 
@@ -18,14 +16,11 @@ spec:
 
     spec:
       imagePullSecrets:
-       {{- toYaml .Values.imagePullSecrets | nindent 8 }}
-       
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+
       containers:
-
-        - name: distributed-web-app
-
+        - name: {{ .Values.container.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
           ports:
@@ -33,26 +28,10 @@ spec:
 
           envFrom:
             - secretRef:
-                name: distributed-web-app-secrets
+                name: {{ .Values.secretName }}
 
           env:
-            - name: AWS_DEFAULT_REGION
-              value: "{{ .Values.aws.region }}"
-
-            - name: DYNAMODB_TABLE
-              value: "distributed-processing"
-
-            - name: WORKERS_TABLE
-              value: "distributed-workers"
-
-            # PostgreSQL
-
-            - name: POSTGRES_HOST
-              value: "{{ .Values.postgres.host }}"
-
-            - name: POSTGRES_PORT
-              value: "{{ .Values.postgres.port }}"
-
+            {{- toYaml .Values.env | nindent 12 }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -61,7 +40,6 @@ spec:
             httpGet:
               path: /health
               port: 8000
-
             initialDelaySeconds: 5
             periodSeconds: 10
 
@@ -69,6 +47,5 @@ spec:
             httpGet:
               path: /health
               port: 8000
-
             initialDelaySeconds: 15
             periodSeconds: 20

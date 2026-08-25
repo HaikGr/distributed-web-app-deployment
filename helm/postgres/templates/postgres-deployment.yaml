@@ -2,58 +2,61 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: postgres
+  name: {{ .Release.Name }}
 
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
 
   selector:
     matchLabels:
-      app: postgres
+      app: {{ .Release.Name }}
 
   template:
     metadata:
       labels:
-        app: postgres
+        app: {{ .Release.Name }}
 
     spec:
       containers:
-
         - name: postgres
 
-          image: postgres:17-alpine
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
 
           args:
             - "-c"
             - "wal_level=logical"
 
           ports:
-            - containerPort: 5432
+            - containerPort: {{ .Values.service.targetPort }}
 
           env:
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: {{ .Release.Name }}-credentials
                   key: POSTGRES_DB
 
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: {{ .Release.Name }}-credentials
                   key: POSTGRES_USER
 
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-credentials
+                  name: {{ .Release.Name }}-credentials
                   key: POSTGRES_PASSWORD
 
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
 
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
-            claimName: postgres-pvc
+            claimName: {{ .Release.Name }}-pvc

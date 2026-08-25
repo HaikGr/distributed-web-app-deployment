@@ -1,15 +1,13 @@
-replicaCount: 3
+replicaCount: 2
 
-nameOverride: ""
-
-secretName: distributed-web-app-secrets
+secretName: cdc-consumer-ui-secrets
 
 container:
-  name: distributed-web-app
+  name: cdc-consumer-ui
 
 image:
-  repository: host.minikube.internal:8082/distributed-web-app
-  tag: "45"
+  repository: host.minikube.internal:8082/cdc-consumer-ui
+  tag: "3"
   pullPolicy: IfNotPresent
 
 service:
@@ -27,7 +25,7 @@ resources:
 
 autoscaling:
   enabled: true
-  minReplicas: 3
+  minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 70
 
@@ -40,3 +38,10 @@ aws:
 postgres:
   host: postgres
   port: 5432
+
+env:
+  - name: KAFKA_BOOTSTRAP_SERVERS
+    value: "my-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+
+  - name: KAFKA_TOPIC
+    value: "postgres.public.requests"

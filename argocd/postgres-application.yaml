@@ -1,8 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-
 metadata:
-  name: distributed-web-app
+  name: postgres
   namespace: argocd
 
 spec:
@@ -11,11 +10,8 @@ spec:
   source:
     repoURL: https://github.com/HaikGr/distributed-web-app-deployment.git
     targetRevision: HEAD
-    path: helm/distributed-web-app
-    helm:
-      valueFiles:
-        - values-app1.yaml
-        
+    path: helm/postgres
+
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -24,3 +20,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

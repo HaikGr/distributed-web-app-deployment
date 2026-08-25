@@ -1,7 +1,5 @@
 replicaCount: 3
 
-nameOverride: ""
-
 secretName: distributed-web-app-secrets
 
 container:
@@ -40,3 +38,20 @@ aws:
 postgres:
   host: postgres
   port: 5432
+
+
+env:
+  - name: AWS_DEFAULT_REGION
+    value: "us-east-1"
+
+  - name: DYNAMODB_TABLE
+    value: "distributed-processing"
+
+  - name: WORKERS_TABLE
+    value: "distributed-workers"
+
+  - name: POSTGRES_HOST
+    value: "postgres"
+
+  - name: POSTGRES_PORT
+    value: "5432"
