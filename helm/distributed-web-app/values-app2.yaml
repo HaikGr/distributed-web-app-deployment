@@ -1,13 +1,11 @@
 replicaCount: 2
 
-secretName: cdc-consumer-ui-secrets
-
 container:
   name: cdc-consumer-ui
 
 image:
   repository: host.minikube.internal:8082/cdc-consumer-ui
-  tag: "3"
+  tag: "5"
   pullPolicy: IfNotPresent
 
 service:
@@ -32,16 +30,36 @@ autoscaling:
 imagePullSecrets:
   - name: nexus-registry
 
-aws:
-  region: us-east-1
-
-postgres:
-  host: postgres
-  port: 5432
-
 env:
+  - name: POSTGRES_HOST
+    value: "postgres"
+
+  - name: POSTGRES_PORT
+    value: "5432"
+
+  - name: POSTGRES_DB
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: POSTGRES_DB
+
+  - name: POSTGRES_USER
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: POSTGRES_USER
+
+  - name: POSTGRES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: postgres-credentials
+        key: POSTGRES_PASSWORD
+
   - name: KAFKA_BOOTSTRAP_SERVERS
     value: "my-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
 
   - name: KAFKA_TOPIC
-    value: "postgres.public.requests"
+    value: "chat-messages"
+
+  - name: KAFKA_GROUP_ID
+    value: "app2-chat"
