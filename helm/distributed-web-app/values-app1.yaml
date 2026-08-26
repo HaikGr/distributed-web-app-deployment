@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 1
 
 secretName: distributed-web-app-secrets
 
@@ -25,7 +25,7 @@ resources:
 
 autoscaling:
   enabled: true
-  minReplicas: 3
+  minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 70
 
