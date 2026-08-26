@@ -5,7 +5,7 @@ container:
 
 image:
   repository: host.minikube.internal:8082/cdc-consumer-ui
-  tag: "5"
+  tag: "6"
   pullPolicy: IfNotPresent
 
 service:
