@@ -73,3 +73,15 @@ env:
       secretKeyRef:
         name: postgres-credentials
         key: POSTGRES_PASSWORD
+
+  - name: KAFKA_BOOTSTRAP_SERVERS
+    value: "my-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+
+  - name: KAFKA_TOPIC
+    value: "chat-messages"
+
+  - name: KAFKA_GROUP_ID
+    value: "app1-chat"
+
+  - name: MAX_MESSAGES
+    value: "100"
